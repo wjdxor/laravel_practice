@@ -13,4 +13,8 @@ class Article extends Model
     {
         return "https://via.placeholder.com/500/DFDFDF/000000?text=^_^";
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
