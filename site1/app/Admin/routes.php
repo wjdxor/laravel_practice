@@ -1,5 +1,7 @@
 <?php
 
+use App\Admin\Controllers\ArticleController;
+use App\Models\Article;
 use Illuminate\Routing\Router;
 
 Admin::routes();
@@ -13,5 +15,5 @@ Route::group([
 
     $router->get('/', 'HomeController@index')->name('home');
     $router->resource('users', UserController::class);
-
+    $router->resource('articles', ArticleController::class);
 });
