@@ -470,6 +470,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .t-z-50 {
   z-index: 50;
 }
+.t-m-0 {
+  margin: 0px;
+}
 .t-mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -480,8 +483,8 @@ Ensure the default browser behavior of the `hidden` attribute.
 .t-mr-auto {
   margin-right: auto;
 }
-.t-mt-2 {
-  margin-top: 0.5rem;
+.t-ml-auto {
+  margin-left: auto;
 }
 .t-block {
   display: block;
@@ -532,9 +535,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-.t-rounded {
-  border-radius: 0.25rem;
 }
 .t-bg-white {
   --tw-bg-opacity: 1;

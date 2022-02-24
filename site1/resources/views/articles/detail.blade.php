@@ -9,15 +9,17 @@
 
                 <div class="t-flex t-gap-4 t-flex-wrap">
                     <div>
-                        <span class="badge bg-primary">{{ $article->id }}</span>
+                        <span class="badge bg-primary">No. {{ $article->id }}</span>
                     </div>
                     <div class="t-mr-auto">
                         <span class="badge bg-secondary">
-                            {{ $article->created_at->format('y.m.d H:i') }}
+                            Date. {{ $article->created_at->format('y.m.d H:i') }}
                         </span>
                     </div>
                     <div>
-                        <span class="badge bg-success">{{ $article->user->name }}</span>
+                        <span class="badge bg-success">
+                            by {{ $article->user->name }}
+                        </span>
                     </div>
                 </div>
 
@@ -25,12 +27,20 @@
                     {{ $article->title }}
                 </div>
 
-                <div>
-                    <img src="{{ $article->thumb_img_url }}" class="t-rounded">
-                </div>
-
                 <div class="t-text-gray-500">
                     {{ nl2br($article->body) }}
+                </div>
+
+                <div class="t-flex t-gap-4">
+                    <a href="{{ route('articles.edit', $article->id) }}" href="#" class="btn btn-link">수정</a>
+                    <form class="t-m-0" action="{{ route('articles.destroy', $article->id) }}" method="POST">
+                        @method('DELETE')
+                        @csrf
+                        <button type="submit" onclick="if ( !confirm('정말 삭제하시겠습니까?') ) return false;"
+                            class="btn btn-outline-danger">삭제</button>
+                    </form>
+                    <a href="{{ route('articles.index') }}" class="btn btn-link t-ml-auto">리스트</a>
+                    <a href="{{ route('articles.create') }}" class="btn btn-link">작성</a>
                 </div>
             </div>
         </div>

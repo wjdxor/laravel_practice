@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Arr;
 use App\Models\Article;
 use Illuminate\Http\Request;
+use App\Http\Requests\ArticleSaveRequest;
 
 class ArticleController extends Controller
 {
@@ -28,7 +30,10 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        echo 'create';
+        return view('articles.save', [
+            'pageMode' => 'write',
+            'article' => new Article()
+        ]);
     }
 
     /**
@@ -37,9 +42,16 @@ class ArticleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ArticleSaveRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $article = new Article();
+        $article->user_id = 1;
+        $article->title = $validated['title'];
+        $article->body = $validated['body'];
+        $article->save();
+
+        return redirect()->route('articles.show', $article->id)->with('success', "{$article->id}번 게시물이 작성되었습니다.");
     }
 
     /**
@@ -63,7 +75,10 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        echo json_encode($article->toArray());
+        return view('articles.save', [
+            'pageMode' => 'edit',
+            'article' => $article
+        ]);
     }
 
     /**
@@ -73,9 +88,15 @@ class ArticleController extends Controller
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Article $article)
+    public function update(ArticleSaveRequest $request, Article $article)
     {
-        //
+        $validated = $request->validated();
+
+        $article->title = $validated['title'];
+        $article->body = $validated['body'];
+        $article->save();
+
+        return redirect()->route('articles.show', $article->id)->with('success', "{$article->id}번 게시물을 수정하였습니다.");
     }
 
     /**
@@ -86,6 +107,9 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        //
+        $id = $article->id;
+        $article->delete();
+
+        return redirect()->route('articles.index')->with('success', "{$id}번 게시물을 삭제하였습니다.");
     }
 }
